@@ -4,4 +4,4 @@ Se generan multiples cuadrados en un frame que colisionan entre ellos cambiando 
 
 Requisitos: PyGame.
 
-Instalacion requisitos: '''pip install pygame'''
+Instalacion requisitos: pip install pygame
