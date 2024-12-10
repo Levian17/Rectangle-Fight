@@ -1,25 +1,17 @@
 import pygame
 from pygame.locals import *
-from objects.MovingRect import MovingRect
-
-# CONSTS COLORES
-RED = (255, 0, 0)
-BLUE = (0, 255, 0)
-GREEN = (0, 0, 255)
+from objects.MovingRect import MovingRect, movingRects_generation
 
 # Parametros iniciales
-width, height = 1000, 800
+width, height = 1080, 720
 screen = pygame.display.set_mode((width, height))
 running = True
 
 # Definicion de los rectangulos
-rect1 = MovingRect(Rect(100, 100, 50, 50), [1, 1], BLUE, height, width) # Se define el cuadrado
-rect2 = MovingRect(Rect(200, 100, 50, 50), [2, 2], GREEN, height, width) # Se define el cuadrado
-rect3 = MovingRect(Rect(300, 100, 50, 50), [3, 3], RED, height, width) # Se define el cuadrado
-rects = [rect1, rect2, rect3]
+rects = movingRects_generation(5, width, height)
 
 pygame.init() # Se inicia el ciclo
-while running: # Ciclo
+while running: # Ciclo frames
     # Detecta los eventos que ocurren (raton, teclas, etc)
     for event in pygame.event.get(): # Controla la salida, con la X y con ESC
         if event.type == pygame.QUIT:
@@ -28,12 +20,12 @@ while running: # Ciclo
             if event.key == K_ESCAPE:
                 running = False
 
-    for rect in rects:
+    for rect in rects: # Desplazamos los rects
         rect.move()
 
-    screen.fill((0,0,0))
-    for rect in rects:
-        pygame.draw.rect(screen, RED, rect)
+    screen.fill((0,0,0)) # Pintamos la pantalla de negro (actua como refresh)
+    for rect in rects: # Pintamos los rectangulos por la pantalla
+        pygame.draw.rect(screen, rect.color, rect)
 
     pygame.display.flip()
 
