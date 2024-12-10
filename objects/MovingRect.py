@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 from pygame.locals import Rect
 
 class MovingRect: # Constructor
@@ -22,6 +22,18 @@ class MovingRect: # Constructor
         if self.rect.left < 0:
             self.speed[0] *= -1
 
+    def check_colision(self, rects: list):
+        ''' Comprueba si esta colisionando con algun rectangulo, si lo hace 
+        su color pasa a ser el del cuadrado que le ha colisionado si su color pierde. '''
+        for rect in rects:
+            if self.rect.colliderect(rect):
+                if self.color == (255,0,0) and rect.color == (0, 255, 0): # Rojo pierde contra azul
+                    self.color = rect.color
+                if self.color == (0,255,0) and rect.color == (0, 0, 255): # Azul pierde contra verde
+                    self.color = rect.color
+                if self.color == (0,0,255) and rect.color == (255, 0, 0): # Verde pierde contra rojo
+                    self.color = rect.color
+
 def movingRects_generation(rect_num: int, screen_width: int, screen_height: int) -> list[MovingRect]:
     ''' Toma la altura y ancho de la pantalla y devuelve una lista con rect_num numero de MovingRects
     con posiciones y colores aleatorios.'''
@@ -38,6 +50,7 @@ def movingRects_generation(rect_num: int, screen_width: int, screen_height: int)
         x = randint(0, screen_width - 50)
         y = randint(0, screen_height - 50)
         color = colors[randint(0, 2)]
-        rect_list.append(MovingRect(Rect(x, y, 50, 50), [1,1], color, screen_height, screen_width))
+        speed = [choice([-1, 1]), choice([-1, 1])]
+        rect_list.append(MovingRect(Rect(x, y, 50, 50), speed, color, screen_height, screen_width))
 
     return rect_list

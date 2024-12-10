@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from objects.MovingRect import MovingRect, movingRects_generation
+from objects.MovingRect import movingRects_generation
 
 # Parametros iniciales
 width, height = 1080, 720
@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((width, height))
 running = True
 
 # Definicion de los rectangulos
-rects = movingRects_generation(5, width, height)
+rects = movingRects_generation(100, width, height)
 
 pygame.init() # Se inicia el ciclo
 while running: # Ciclo frames
@@ -22,6 +22,7 @@ while running: # Ciclo frames
 
     for rect in rects: # Desplazamos los rects
         rect.move()
+        rect.check_colision(rects)
 
     screen.fill((0,0,0)) # Pintamos la pantalla de negro (actua como refresh)
     for rect in rects: # Pintamos los rectangulos por la pantalla
